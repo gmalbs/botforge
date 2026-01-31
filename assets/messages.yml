@@ -1,0 +1,17 @@
+messages:
+  - name: start
+    text: "<b>👋 Olá, {firstName}!</b>\n\n🤖 Eu estou aqui para automatizar as descrições das suas postagens no Canal!\n\n✨ Com o sistema de <b>Legendas Inteligentes</b>, suas publicações sempre terão descrições personalizadas e organizadas.\n\n📖 Consulte a aba Como Usar para aprender a configurar tudo rapidamente!"
+    buttons:
+      - - text: "📋 Meus Dados"
+          callback_data: "profile-info:{userID}"
+        - text: "🆘 Como Usar"
+          callback_data: "help"
+      - - text: "ℹ️ Sobre"
+          callback_data: "about"
+  - name: help
+    text: "📖 <b>Como Usar:</b>\n\n1. Configure suas legendas.\n2. Envie o post.\n3. O bot fará o resto!"
+    buttons:
+      - - text: "🔙 Voltar"
+          callback_data: "start"
+  - name: maintenance
+    text: "⚠️ <b>Modo de Manutenção</b>\n\nO bot está em manutenção no momento. Por favor, tente novamente mais tarde."

@@ -1,0 +1,56 @@
+version: '3.8'
+
+# Rede interna para os serviços se comunicarem
+networks:
+  stack-dev:
+    name: stack-dev
+    driver: bridge
+
+# Volumes para PERSISTIR dados. Seus dados não se perdem ao apagar os containers
+volumes:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: telegram_bot # Banco já criado automaticamente na primeira inicialização
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      # (Opcional) Coloque arquivos .sql nessa pasta para rodar na primeira criação do banco
+      # - ./postgres-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev -d meu_banco"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - stack-dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    # Comando já habilita persistência de dados e senha
+    command: redis-server --save 60 1 --loglevel warning --requirepass senha123
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - stack-dev
