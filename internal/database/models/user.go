@@ -5,11 +5,10 @@ import (
 )
 
 type User struct {
-	gorm.Model
-	TelegramID int64  `gorm:"uniqueIndex"`
-	FirstName  string
-	Username   string
-	IsAdmin    bool   `gorm:"default:false"`
+	UserID    int64 `gorm:"uniqueIndex"`
+	FirstName string
+	Username  string
+	IsAdmin   bool `gorm:"default:false"`
 }
 
 type BotSettings struct {

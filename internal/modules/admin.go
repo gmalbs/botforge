@@ -4,8 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gmalbs/botforge/internal/bot"
+	"github.com/gmalbs/botforge/internal/config"
 	"github.com/gmalbs/botforge/internal/database"
-	"github.com/gmalbs/botforge/internal/models"
+	"github.com/gmalbs/botforge/internal/database/models"
 
 	"github.com/amarnathcjd/gogram/telegram"
 )
@@ -24,7 +25,7 @@ func (m *AdminModule) Register(client *telegram.Client) {
 
 func (m *AdminModule) handleAdmin(ctx *telegram.NewMessage) error {
 	user, _ := bot.GetUserAndCheckMaintenance(ctx.Sender)
-	if !user.IsAdmin {
+	if !user.IsAdmin && user.UserID != config.OwnerID {
 		_, err := ctx.Reply("❌ Você não tem permissão para usar este comando.")
 		return err
 	}
@@ -44,7 +45,7 @@ func (m *AdminModule) handleAdmin(ctx *telegram.NewMessage) error {
 
 func (m *AdminModule) toggleMaintenance(ctx *telegram.NewMessage) error {
 	user, _ := bot.GetUserAndCheckMaintenance(ctx.Sender)
-	if !user.IsAdmin {
+	if !user.IsAdmin && user.UserID != config.OwnerID {
 		return nil
 	}
 
@@ -64,7 +65,7 @@ func (m *AdminModule) toggleMaintenance(ctx *telegram.NewMessage) error {
 
 func (m *AdminModule) setAdmin(ctx *telegram.NewMessage) error {
 	user, _ := bot.GetUserAndCheckMaintenance(ctx.Sender)
-	if !user.IsAdmin && user.TelegramID != 0 {
+	if !user.IsAdmin && user.UserID != 0 && user.UserID != config.OwnerID {
 		return nil
 	}
 
@@ -75,7 +76,7 @@ func (m *AdminModule) setAdmin(ctx *telegram.NewMessage) error {
 	}
 
 	targetID := args[0]
-	database.DB.Model(&models.User{}).Where("telegram_id = ?", targetID).Update("is_admin", true)
+	database.DB.Model(&models.User{}).Where("user_id = ?", targetID).Update("is_admin", true)
 
 	_, err := ctx.Reply(fmt.Sprintf("✅ Usuário %s agora é admin!", targetID))
 	return err

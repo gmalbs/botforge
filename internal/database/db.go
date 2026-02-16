@@ -6,8 +6,7 @@ import (
 	"log"
 
 	"github.com/gmalbs/botforge/internal/config"
-	"github.com/gmalbs/botforge/internal/models"
-
+	"github.com/gmalbs/botforge/internal/database/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -21,7 +20,19 @@ func InitDB() {
 	}
 
 	// Auto Migrate
-	err = db.AutoMigrate(&models.User{}, &models.BotSettings{})
+	err = db.AutoMigrate(
+		&models.User{},
+		&models.BotSettings{},
+
+		&models.Bot{},
+		&models.Group{},
+		&models.GroupUser{},
+		&models.RewardRule{},
+		&models.ShopItem{},
+		&models.Inventory{},
+		&models.CoinTransaction{},
+		&models.AuditLog{},
+	)
 	if err != nil {
 		log.Fatal("Failed to migrate database:", err)
 	}

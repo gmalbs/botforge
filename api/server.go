@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gmalbs/botforge/internal/database"
-	"github.com/gmalbs/botforge/internal/models"
+	"github.com/gmalbs/botforge/internal/database/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +16,7 @@ func StartServer(port string) {
 	r.GET("/api/user/:id", func(c *gin.Context) {
 		id := c.Param("id")
 		var user models.User
-		if err := database.DB.Where("telegram_id = ?", id).First(&user).Error; err != nil {
+		if err := database.DB.Where("user_id = ?", id).First(&user).Error; err != nil {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
 		}

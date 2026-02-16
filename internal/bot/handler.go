@@ -5,7 +5,7 @@ import (
 
 	"github.com/gmalbs/botforge/internal/config"
 	"github.com/gmalbs/botforge/internal/database"
-	"github.com/gmalbs/botforge/internal/models"
+	"github.com/gmalbs/botforge/internal/database/models"
 
 	"github.com/amarnathcjd/gogram/telegram"
 )
@@ -47,10 +47,10 @@ func InitBot(token string) (*telegram.Client, error) {
 func GetUserAndCheckMaintenance(tgUser telegram.User) (*models.User, bool) {
 	uObj := tgUser.(*telegram.UserObj)
 	var user models.User
-	database.DB.Where("telegram_id = ?", uObj.ID).FirstOrCreate(&user, models.User{
-		TelegramID: uObj.ID,
-		FirstName:  uObj.FirstName,
-		Username:   uObj.Username,
+	database.DB.Where("user_id = ?", uObj.ID).FirstOrCreate(&user, models.User{
+		UserID:    uObj.ID,
+		FirstName: uObj.FirstName,
+		Username:  uObj.Username,
 	})
 
 	var settings models.BotSettings
@@ -110,7 +110,7 @@ func EditConfigMessage(client *telegram.Client, chatID int64, messageID int32, m
 func GetDefaultVars(u *models.User) map[string]string {
 	return map[string]string{
 		"firstName": u.FirstName,
-		"userID":    strconv.FormatInt(u.TelegramID, 10),
+		"userID":    strconv.FormatInt(u.UserID, 10),
 		"username":  u.Username,
 	}
 }
