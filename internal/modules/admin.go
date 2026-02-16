@@ -2,9 +2,10 @@ package modules
 
 import (
 	"fmt"
-	"telegram-bot/internal/bot"
-	"telegram-bot/internal/database"
-	"telegram-bot/internal/models"
+
+	"github.com/gmalbs/botforge/internal/bot"
+	"github.com/gmalbs/botforge/internal/database"
+	"github.com/gmalbs/botforge/internal/models"
 
 	"github.com/amarnathcjd/gogram/telegram"
 )
@@ -75,7 +76,7 @@ func (m *AdminModule) setAdmin(ctx *telegram.NewMessage) error {
 
 	targetID := args[0]
 	database.DB.Model(&models.User{}).Where("telegram_id = ?", targetID).Update("is_admin", true)
-	
+
 	_, err := ctx.Reply(fmt.Sprintf("✅ Usuário %s agora é admin!", targetID))
 	return err
 }

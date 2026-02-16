@@ -2,9 +2,10 @@ package bot
 
 import (
 	"strconv"
-	"telegram-bot/internal/config"
-	"telegram-bot/internal/database"
-	"telegram-bot/internal/models"
+
+	"github.com/gmalbs/botforge/internal/config"
+	"github.com/gmalbs/botforge/internal/database"
+	"github.com/gmalbs/botforge/internal/models"
 
 	"github.com/amarnathcjd/gogram/telegram"
 )

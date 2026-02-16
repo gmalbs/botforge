@@ -1,4 +1,4 @@
-module telegram-bot
+module github.com/gmalbs/botforge
 
 go 1.25.0
 

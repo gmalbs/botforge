@@ -2,8 +2,9 @@ package api
 
 import (
 	"net/http"
-	"telegram-bot/internal/database"
-	"telegram-bot/internal/models"
+
+	"github.com/gmalbs/botforge/internal/database"
+	"github.com/gmalbs/botforge/internal/models"
 
 	"github.com/gin-gonic/gin"
 )

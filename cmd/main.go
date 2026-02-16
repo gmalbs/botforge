@@ -6,13 +6,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	"telegram-bot/api"
-	"telegram-bot/internal/bot"
-	"telegram-bot/internal/config"
-	"telegram-bot/internal/database"
+	"github.com/gmalbs/botforge/api"
+	"github.com/gmalbs/botforge/internal/bot"
+	"github.com/gmalbs/botforge/internal/config"
+	"github.com/gmalbs/botforge/internal/database"
 
 	// Import modules to trigger init()
-	"telegram-bot/internal/modules"
+	"github.com/gmalbs/botforge/internal/modules"
 )
 
 func main() {

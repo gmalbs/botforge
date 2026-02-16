@@ -4,8 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"telegram-bot/internal/config"
-	"telegram-bot/internal/models"
+
+	"github.com/gmalbs/botforge/internal/config"
+	"github.com/gmalbs/botforge/internal/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

@@ -1,7 +1,7 @@
 package modules
 
 import (
-	"telegram-bot/internal/bot"
+	"github.com/gmalbs/botforge/internal/bot"
 
 	"github.com/amarnathcjd/gogram/telegram"
 )
